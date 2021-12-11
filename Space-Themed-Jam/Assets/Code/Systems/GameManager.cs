@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private IScoreSystem _scoreSystem;
     private UserData _userData;
     private InMenuState _inMenu;
+    private InHighScoresState _inHighScores;
     private PausedState _paused;
     private PlayingState _playing;
     private GameOverState _gameOver;
@@ -23,12 +24,15 @@ public class GameManager : MonoBehaviour
             
         // instanciamos los diferentes estados
         _inMenu = new InMenuState(this);
+        _inHighScores = new InHighScoresState(this);
         _paused = new PausedState();
         _playing = new PlayingState(this);
         _gameOver = new GameOverState();
 
         // definimos las transiciones
         AddTransition(_inMenu, _playing, OnStatePlaying());
+        AddTransition(_inMenu, _inHighScores, OnStateHighScores());
+        AddTransition(_inHighScores, _inMenu, OnStateInMenu());
         AddTransition(_playing, _paused, OnStatePaused());
         AddTransition(_playing, _gameOver, OnStateGameOver());
         AddTransition(_paused, _playing, OnStatePlaying());
@@ -40,6 +44,7 @@ public class GameManager : MonoBehaviour
             
         // definimos las condiciones
         Func<bool> OnStatePlaying() => () => CurrentGameState == GameStates.Playing;
+        Func<bool> OnStateHighScores() => () => CurrentGameState == GameStates.InHighScores;
         Func<bool> OnStatePaused() => () => CurrentGameState == GameStates.Paused;
         Func<bool> OnStateGameOver() => () => CurrentGameState == GameStates.GameOver;
         Func<bool> OnStateInMenu() => () => CurrentGameState == GameStates.InMenu;
@@ -59,10 +64,6 @@ public class GameManager : MonoBehaviour
         _stateMachine.Tick();
     }
 
-    public void GoToMenu()
-    {
-        _sceneController.LoadScene("Menu");
-    }
 
     public void GameOver()
     {
