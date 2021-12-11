@@ -2,6 +2,7 @@
 {
     StartGamePressed,
     GoToHighScore,
+    BackToMenu,
     ExitGame,
     GameOver,
     Victory,
