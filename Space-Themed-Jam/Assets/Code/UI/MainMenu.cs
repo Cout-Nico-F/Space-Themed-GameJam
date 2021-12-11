@@ -23,6 +23,7 @@ public class MainMenu : MonoBehaviour
 
     private void GoToHighScores()
     {
+        _eventQueue.EnqueueEvent(new GoToHighScoresEvent());
     }
 
     private void StartGame()
@@ -32,7 +33,11 @@ public class MainMenu : MonoBehaviour
 
     private void Quit()
     {
-        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();       
+#endif
     }
 
 }
