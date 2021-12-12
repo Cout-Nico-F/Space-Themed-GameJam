@@ -1,7 +1,7 @@
 ﻿public interface IScoreSystem
 {
     void Reset();
-    string[] GetPlayerNames();
-    int[] GetBestScores();
+    UserData GetUserData();
+    void SaveUserData(string[] playerNames, int[] bestScores);
     int CurrentScore { get; }
 }
