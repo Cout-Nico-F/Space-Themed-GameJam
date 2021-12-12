@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     private StateMachine _stateMachine;
     private SceneController _sceneController;
+    private DataStore _dataStore;
     private IScoreSystem _scoreSystem;
     private UserData _userData;
     private InMenuState _inMenu;
@@ -21,7 +22,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         _stateMachine = new StateMachine();
-            
+        _dataStore = new DataStore();
+
         // instanciamos los diferentes estados
         _inMenu = new InMenuState(this);
         _inHighScores = new InHighScoresState(this);
@@ -52,8 +54,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        _scoreSystem = new ScoreSystem(_dataStore);
+        ServiceLocator.Instance.RegisterService<IScoreSystem>(_scoreSystem);
+
         _sceneController = ServiceLocator.Instance.GetService<SceneController>();
-        _scoreSystem = ServiceLocator.Instance.GetService<IScoreSystem>();
             
         CurrentGameState = GameStates.InMenu;
         _stateMachine.SetState(_inMenu);
@@ -74,65 +78,8 @@ public class GameManager : MonoBehaviour
     public void SaveData(string name, int score)
     {
         if (name == String.Empty)
-        {
             name = "User name";
-        }
             
-        var playerNames = new string[12];
-        var playerScores = new int[12];
-        int length;
-        int pos;
-
-        //data = DataStore.Instance.GetData<UserData>("data");
-
-        if (_userData == null)
-        {
-            playerNames[0] = name;
-            playerScores[0] = score;
-            length = 1;
-            pos = 0;
-            _userData = new UserData();
-            //DataStore.Instance.SetData(data, "data");
-        }
-        else
-        {
-            length = this._userData.BestScores.Length + 1;
-            if (length > 12)
-            {
-                length = 12;
-            }
-
-            playerNames = this._userData.PlayerNames;
-            playerScores = this._userData.BestScores;            
-            int scorePrev;
-            string namePrev;
-
-            var i = 0;
-            while (playerScores[i] > score)
-            {                
-                i++;
-            }
-
-            pos = i;
-            scorePrev = playerScores[i];
-            namePrev = playerNames[i];
-            playerScores[i] = score;
-            playerNames[i] = name;            
-            i++;
-
-            for (var j = i; j < length; j++)
-            {
-                var scoreTemp = playerScores[j];
-                name = playerNames[j];
-                playerScores[j] = scorePrev;
-                playerNames[j] = namePrev;
-                scorePrev = scoreTemp;
-                namePrev = name;
-            }            
-
-            _userData = new UserData();
-            //DataStore.Instance.SetData(data, "data");
-        }
 
         //_sceneController.LoadScene("HighScores");
     }
