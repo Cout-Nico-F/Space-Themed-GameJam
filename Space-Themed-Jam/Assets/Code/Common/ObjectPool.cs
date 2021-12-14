@@ -4,40 +4,43 @@ using UnityEngine;
 public class ObjectPool
 {
     private string _tag;
-    private GameObject _prefab;
-    private int _size;
-    private Queue<GameObject> _objectPool;
+    private Projectile _projectilePrefab;
+    private const int SIZE = 10;
+    private Queue<Projectile> _objectPool;
 
-    public ObjectPool(string tag, GameObject prefab, int size)
+
+    public ObjectPool(string tag, Projectile prefab)
     {
         _tag = tag;
-        _prefab = prefab;
-        _size = size;
+        _projectilePrefab = prefab;
     }
 
     public void Init()
     {
-        _objectPool = new Queue<GameObject>();
-        for (int i = 0; i < _size; i++)
+        _objectPool = new Queue<Projectile>();
+        for (int i = 0; i < SIZE; i++)
         {
-            var obj = Object.Instantiate(_prefab);
-            obj.SetActive(false);
+            var obj = Object.Instantiate(_projectilePrefab);
+            obj.gameObject.SetActive(false);
             _objectPool.Enqueue(obj);
         }
     }
     
-    public GameObject SpawnFromPool(Vector3 position, Quaternion rotation)
+    public Projectile SpawnFromPool(Vector3 position, Quaternion rotation)
     {
-        if (_objectPool.Count <= 0)
+        var obj = _objectPool.Dequeue();
+
+        if (obj.gameObject.activeInHierarchy)
         {
-            Debug.LogError("Hemos sobrepasado el tamaño de la pool");
-            return null;
+            _objectPool.Enqueue(obj);
+            var newObj = Object.Instantiate(_projectilePrefab);
+            _objectPool.Enqueue(newObj);
+            newObj.Init(position, rotation);
+            return newObj;
         }
 
-        var obj = _objectPool.Dequeue();
-        obj.SetActive(true);
-        obj.transform.position = position;
-        obj.transform.rotation = rotation;
+        obj.gameObject.SetActive(true);
+        obj.Init(position, rotation);
         _objectPool.Enqueue(obj);
         return obj;
     }
