@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private ProjectilesConfiguration projectilesConfiguration;
+    [SerializeField] private ProjectileId defaultProyectile;
     [SerializeField] private Transform projectileSpawnpoint;
     [SerializeField] private float fireRate;
 
-    private ObjectPool _objectPool;
+    private ProjectileFactory _projectileFactory;
     private float _timeBetweenShoots;
 
     private void Awake()
     {
-        _objectPool = new ObjectPool("Projectile1", projectilePrefab, 20);
-        _objectPool.Init();
+        var instance = Instantiate(projectilesConfiguration);
+        _projectileFactory = new ProjectileFactory(instance);
+        _projectileFactory.Init();
     }
 
     
@@ -31,8 +33,7 @@ public class WeaponController : MonoBehaviour
     {
         if (Time.time > _timeBetweenShoots)
         {
-            var projectile = _objectPool.SpawnFromPool(projectileSpawnpoint.position, projectileSpawnpoint.rotation);
-            projectile.GetComponent<Rigidbody2D>().velocity = Vector3.right * 10f;
+            var projectile = _projectileFactory.SpawnFromPool(defaultProyectile.Value, projectileSpawnpoint.position, projectileSpawnpoint.rotation);
             _timeBetweenShoots = Time.time + fireRate;
         }
     }
