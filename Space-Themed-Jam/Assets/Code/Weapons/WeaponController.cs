@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
@@ -21,9 +18,9 @@ public class WeaponController : MonoBehaviour
     }
 
     
-    private void Update()
+    public void TryShoot()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Time.time > _timeBetweenShoots)
         {
             Shoot();
         }
@@ -31,10 +28,7 @@ public class WeaponController : MonoBehaviour
 
     private void Shoot()
     {
-        if (Time.time > _timeBetweenShoots)
-        {
-            var projectile = _projectileFactory.SpawnFromPool(defaultProyectile.Value, projectileSpawnpoint.position, projectileSpawnpoint.rotation);
-            _timeBetweenShoots = Time.time + fireRate;
-        }
+        var projectile = _projectileFactory.SpawnFromPool(defaultProyectile.Value, projectileSpawnpoint.position, projectileSpawnpoint.rotation);
+        _timeBetweenShoots = Time.time + fireRate;
     }
 }
