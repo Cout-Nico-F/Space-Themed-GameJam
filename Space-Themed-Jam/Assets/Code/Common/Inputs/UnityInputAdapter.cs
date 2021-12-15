@@ -22,4 +22,8 @@ public class UnityInputAdapter : IInput
         return new Vector2(horizontal, vertical).normalized;
     }
 
+    public bool IsActionFirePressed()
+    {
+        return Input.GetKey(_actionBindings.fire);
+    }
 }

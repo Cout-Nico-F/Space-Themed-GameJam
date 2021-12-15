@@ -16,3 +16,4 @@ MonoBehaviour:
   moveDown: 115
   moveLeft: 97
   moveRight: 100
+  fire: 323

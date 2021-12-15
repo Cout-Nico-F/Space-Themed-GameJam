@@ -8,4 +8,6 @@ public class ActionBindings : ScriptableObject
     public KeyCode moveDown;
     public KeyCode moveLeft;
     public KeyCode moveRight;
+
+    public KeyCode fire;
 }
