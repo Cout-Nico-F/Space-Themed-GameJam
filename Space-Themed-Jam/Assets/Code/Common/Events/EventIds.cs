@@ -6,5 +6,6 @@
     ExitGame,
     GameOver,
     Victory,
-    Restart
+    Restart,
+    EnemyDestroyed
 }
