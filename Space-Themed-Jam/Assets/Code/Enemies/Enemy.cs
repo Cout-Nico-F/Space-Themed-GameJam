@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
@@ -8,10 +6,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private EnemyId id;
     [SerializeField] protected float Speed;
     [SerializeField] private int damage;
+    [SerializeField] private int pointsToAdd;
 
     protected Transform MyTransform;
     protected Rigidbody2D Rb;
     protected SpriteRenderer Renderer;
+    protected HealthController HealthController;
 
     public string Id => id.Value;
 
@@ -20,6 +20,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         Rb = GetComponent<Rigidbody2D>();
         Renderer = GetComponent<SpriteRenderer>();
+        HealthController = GetComponent<HealthController>();
     }
 
     public void Init()
@@ -41,12 +42,18 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         var damageable = collision.GetComponent<IDamageable>();
         if (damageable != null)
-            damageable.AddDamage(damage);
+            damageable.RecieveDamage(damage);
     }
 
 
-    public void AddDamage(int amount)
+    public void RecieveDamage(int amount)
     {
-        throw new System.NotImplementedException();
+        var isDead = HealthController.ReciveDamage(amount);
+        if (isDead)
+        {
+            Destroy(gameObject);
+            var enemyDestroyedEvent = new EnemyDestroyedEvent(pointsToAdd, GetInstanceID());
+            ServiceLocator.Instance.GetService<EventQueue>().EnqueueEvent(enemyDestroyedEvent);
+        }
     }
 }
