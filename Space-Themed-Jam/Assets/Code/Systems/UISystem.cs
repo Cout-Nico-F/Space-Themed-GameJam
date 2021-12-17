@@ -2,13 +2,23 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class UISystem : MonoBehaviour
+public class UISystem : MonoBehaviour, IEventObserver
 {
+    [SerializeField] private ScoreView scoreView;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private CanvasGroup countdownCanvasGroup;
 
 
+    private void Start()
+    {
+        HideAllMenus();
+        // nos suscribimos a los eventos Victory y Game Over
+    }
+
+    private void HideAllMenus()
+    {
+    }
 
     public void ShowCountdown()
     {
@@ -36,5 +46,23 @@ public class UISystem : MonoBehaviour
         sequence.Append(countdownText.rectTransform.DOScale(new Vector3(1, 1, 1), .3f).SetEase(Ease.OutSine));
         sequence.Append(countdownCanvasGroup.DOFade(0, .2f));
         sequence.OnComplete(() => countdownText.gameObject.SetActive(false));
+    }
+
+
+    public void ResetScore()
+    {
+        scoreView.ResetScore();
+    }
+
+
+    public void AddScore(int points)
+    {
+        scoreView.AddScore(points);
+    }
+
+
+    public void Process(EventData eventData)
+    {
+        throw new System.NotImplementedException();
     }
 }

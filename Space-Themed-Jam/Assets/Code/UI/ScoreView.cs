@@ -1,51 +1,26 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class ScoreView : MonoBehaviour
 {
-    public static ScoreView Instance { get; private set; }
+    [SerializeField] private TextMeshProUGUI scoreText;
 
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private GameObject _gameOverView;
-    [SerializeField] private TextMeshProUGUI _scoreText;
-    [SerializeField] private TMP_InputField _namePlayer;
-        
     private int _currentScore;
 
-    public int CurrentScore
+    
+    public void ResetScore()
     {
-        get => _currentScore;
-        private set
-        {
-            _currentScore = value;
-            _text.SetText(_currentScore.ToString());
-        }
-    }
-        
-    private void Awake()
-    {
-        Instance = this;
-        //_namePlayer.onEndEdit.AddListener(SaveData);
-    }
-        
-    public void AddScore(int scoreToAdd)
-    {
-        CurrentScore += scoreToAdd;
+        UpdateScore(0);
     }
 
-    public void ActivateGameOverView()
+    private void UpdateScore(int newScore)
     {
-        _gameOverView.SetActive(true);
-        _scoreText.text = CurrentScore.ToString();
-        _namePlayer.Select();
+        scoreText.SetText(_currentScore.ToString());
     }
 
-    private void SaveData(string name)
+    public void AddScore(int points)
     {
-        _namePlayer.text = String.Empty;
-        _gameOverView.SetActive(false);
-        GameManager.Instance.SaveData(name, CurrentScore);
+        _currentScore += points;
+        UpdateScore(_currentScore);
     }
-
 }

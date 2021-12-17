@@ -12,6 +12,11 @@ public class LevelInstaller : MonoBehaviour
         ServiceLocator.Instance.RegisterService(uiSystem);
     }
 
+    private void Start()
+    {
+        ServiceLocator.Instance.GetService<IScoreSystem>().Init();
+    }
+
     private void OnDestroy()
     {
         ServiceLocator.Instance.UnregisterService<EnemySpawner>();

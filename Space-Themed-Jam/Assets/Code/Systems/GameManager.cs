@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
     {
         _scoreSystem = new ScoreSystem(_dataStore);
         ServiceLocator.Instance.RegisterService<IScoreSystem>(_scoreSystem);
-
         _sceneController = ServiceLocator.Instance.GetService<SceneController>();
             
         CurrentGameState = GameStates.InMenu;

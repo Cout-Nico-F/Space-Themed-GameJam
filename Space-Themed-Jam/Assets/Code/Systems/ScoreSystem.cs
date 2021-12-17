@@ -4,24 +4,33 @@ public class ScoreSystem : IEventObserver, IScoreSystem
 {
     public int CurrentScore => _currentScore;
 
+    private UISystem _uISystem;
     private readonly DataStore _dataStore;
     private int _currentScore;
     private const string Userdata = "UserData";
 
         
+
     public ScoreSystem(DataStore dataStore)
     {
         _dataStore = dataStore;
         var eventQueue = ServiceLocator.Instance.GetService<EventQueue>();
         eventQueue.Subscribe(EventIds.Victory, this);
-        //eventQueue.Subscribe(EventIds.ShipDestroyed, this);
+        eventQueue.Subscribe(EventIds.EnemyDestroyed, this);
     }
 
-        
+
+    public void Init()
+    {
+        _uISystem = ServiceLocator.Instance.GetService<UISystem>();
+        Reset();
+    }
+
+
     public void Reset()
     {
         _currentScore = 0;
-        // ScoreView.ResetScore
+        _uISystem.ResetScore();
     }
 
 
@@ -33,17 +42,16 @@ public class ScoreSystem : IEventObserver, IScoreSystem
             return;
         }
 
-        /*
-        if (eventData.EventId == EventIds.ShipDestroyed)
+        if (eventData.EventId == EventIds.EnemyDestroyed)
         {
-            AddScore();
+            var enemyDestroyedData = (EnemyDestroyedEvent) eventData;
+            AddScore(enemyDestroyedData.PointsToAdd);
         }
-        */
     }
 
-    private void AddScore()
+    private void AddScore(int points)
     {
-        throw new NotImplementedException();
+        _uISystem.AddScore(points);
     }
 
     private void UpdateBestScores(string playerName, int newScore)
