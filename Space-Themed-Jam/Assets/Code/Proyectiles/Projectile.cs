@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class Projectile : MonoBehaviour, IDamageable
+public abstract class Projectile : MonoBehaviour
 {
     [SerializeField] private ProjectileId id;
     [SerializeField] protected Rigidbody2D Rb;
@@ -36,7 +36,10 @@ public abstract class Projectile : MonoBehaviour, IDamageable
     {
         var damageable = collision.GetComponent<IDamageable>();
         if (damageable != null)
-            damageable.AddDamage(damage);
+        {
+            damageable.RecieveDamage(damage);
+            DeactivateProjectile();
+        }
     }
     
     private IEnumerator DeactivateIn(float seconds)
@@ -53,9 +56,4 @@ public abstract class Projectile : MonoBehaviour, IDamageable
     }
 
     protected abstract void DoDeactivate();
-        
-    public void AddDamage(int amount)
-    {
-        DeactivateProjectile();
-    }
 }
