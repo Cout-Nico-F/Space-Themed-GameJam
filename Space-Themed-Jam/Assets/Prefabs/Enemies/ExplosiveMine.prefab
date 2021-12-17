@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1857015054868753569}
   - component: {fileID: 3751947717563979698}
   - component: {fileID: 9086998636716809819}
-  m_Layer: 0
+  - component: {fileID: 4366004036625182692}
+  m_Layer: 7
   m_Name: ExplosiveMine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +117,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -138,3 +139,16 @@ MonoBehaviour:
   id: {fileID: 11400000, guid: f59157e3e68cc3f44a40e9fc8203d4ac, type: 2}
   Speed: 5
   damage: 25
+  pointsToAdd: 10
+--- !u!114 &4366004036625182692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717485221289630377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7844f0e62753a30479891cf0a269559a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
