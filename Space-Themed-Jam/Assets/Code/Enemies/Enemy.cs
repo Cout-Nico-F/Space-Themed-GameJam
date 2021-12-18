@@ -2,16 +2,19 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] protected Collider2D EnemyCollider;
     [SerializeField] private EnemyId id;
-    [SerializeField] protected float Speed;
-    [SerializeField] private int damage;
-    [SerializeField] private int pointsToAdd;
+    [SerializeField] private int damageForImpact;
 
-    protected Transform MyTransform;
     protected Rigidbody2D Rb;
+    protected Collider2D EnemyCollider;
     protected SpriteRenderer Renderer;
     protected HealthController HealthController;
+    protected WeaponController WeaponController;
+    protected int Health;
+    protected float Speed;
+    protected float FireRate;
+    protected int PointsToAdd;
+    protected Transform MyTransform;
 
     public string Id => id.Value;
 
@@ -19,17 +22,32 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     private void Awake()
     {
         Rb = GetComponent<Rigidbody2D>();
+        EnemyCollider = GetComponent<Collider2D>();
         Renderer = GetComponent<SpriteRenderer>();
         HealthController = GetComponent<HealthController>();
+        WeaponController = GetComponent<WeaponController>();
     }
 
-    public void Init()
+    public void Configure(int health, float speed, float fireRate, int pointsToAdd)
     {
         MyTransform = transform;
+        Health = health;
+        Speed = speed;
+        FireRate = fireRate;
+        PointsToAdd = pointsToAdd;
+        HealthController.Init(Health);
+        WeaponController.Configure(FireRate);
         DoInit();
     }
 
     protected abstract void DoInit();
+
+    private void Update()
+    {
+        DoTryShoot();    
+    }
+
+    protected abstract void DoTryShoot();
 
     private void FixedUpdate()
     {
@@ -42,7 +60,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         var damageable = collision.GetComponent<IDamageable>();
         if (damageable != null)
-            damageable.RecieveDamage(damage);
+            damageable.RecieveDamage(damageForImpact);
     }
 
 
@@ -52,7 +70,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         if (isDead)
         {
             Destroy(gameObject);
-            var enemyDestroyedEvent = new EnemyDestroyedEvent(pointsToAdd, GetInstanceID());
+            var enemyDestroyedEvent = new EnemyDestroyedEvent(PointsToAdd, GetInstanceID());
             ServiceLocator.Instance.GetService<EventQueue>().EnqueueEvent(enemyDestroyedEvent);
         }
     }
