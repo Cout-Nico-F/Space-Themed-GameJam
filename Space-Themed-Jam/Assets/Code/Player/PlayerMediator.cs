@@ -5,6 +5,7 @@ public class PlayerMediator : MonoBehaviour, IDamageable
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private HealthController healthController;
     [SerializeField] private WeaponController weaponController;
+    [SerializeField] private float fireRate;
     [SerializeField] private int maxHealth;
 
     private Collider2D _collider;
@@ -21,6 +22,7 @@ public class PlayerMediator : MonoBehaviour, IDamageable
     {
         _input = ServiceLocator.Instance.GetService<IInput>();
         healthController.Init(maxHealth);
+        weaponController.Configure(fireRate);
     }
 
 
@@ -41,7 +43,9 @@ public class PlayerMediator : MonoBehaviour, IDamageable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        throw new System.NotImplementedException();
+        var damageable = collision.GetComponent<IDamageable>();
+        if (damageable != null)
+            damageable.RecieveDamage(100);
     }
 
     public void RecieveDamage(int amount)

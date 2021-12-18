@@ -5,9 +5,9 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private ProjectilesConfiguration projectilesConfiguration;
     [SerializeField] private ProjectileId defaultProyectile;
     [SerializeField] private Transform projectileSpawnpoint;
-    [SerializeField] private float fireRate;
 
     private ProjectileFactory _projectileFactory;
+    private float fireRate;
     private float _timeBetweenShoots;
 
     private void Awake()
@@ -17,6 +17,10 @@ public class WeaponController : MonoBehaviour
         _projectileFactory.Init();
     }
 
+    public void Configure(float fireRate)
+    {
+        this.fireRate = fireRate;
+    }
     
     public void TryShoot()
     {
