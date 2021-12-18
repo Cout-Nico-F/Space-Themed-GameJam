@@ -5,16 +5,23 @@ using UnityEngine;
 public abstract class Projectile : MonoBehaviour
 {
     [SerializeField] private ProjectileId id;
-    [SerializeField] protected Rigidbody2D Rb;
     [SerializeField] protected float Speed;
     [SerializeField] private float timeToDeactivate;
     [SerializeField] private int damage;
 
+    protected Rigidbody2D Rb;
+    protected Collider2D Collider2D;
     protected Transform MyTransform;
     protected bool Active;
     public string Id => id.Value;
 
-        
+
+    private void Awake()
+    {
+        Rb = GetComponent<Rigidbody2D>();
+        Collider2D = GetComponent<Collider2D>();
+    }
+
     public void Init(Vector3 position, Quaternion rotation)
     {
         MyTransform = transform;
