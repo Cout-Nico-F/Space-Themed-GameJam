@@ -3,10 +3,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create/EnemyToSpawn")]
 public class EnemyToSpawn : ScriptableObject
 {
-    public EnemyId EnemyId { get; }
-    public Vector3 SpawnPosition { get; }
-    public int Health { get; }
-    public float Speed { get; }
-    public float FireRate { get; }
-    public int PointsToAdd { get; }
+    [SerializeField] private EnemyId enemyId;
+    [SerializeField] private Vector3 spawnPosition;
+    [SerializeField] private int health;
+    [SerializeField] private float speed;
+    [SerializeField] private float fireRate;
+    [SerializeField] private int pointsToAdd;
+
+    public EnemyId EnemyId => enemyId;
+    public Vector3 SpawnPosition => spawnPosition;
+    public int Health => health;
+    public float Speed => speed;
+    public float FireRate => fireRate;
+    public int PointsToAdd => pointsToAdd;
 }

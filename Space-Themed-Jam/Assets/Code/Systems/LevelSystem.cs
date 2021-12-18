@@ -6,6 +6,7 @@ public class LevelSystem : MonoBehaviour
     [SerializeField] private int countdownTime;
 
     private UISystem _uiSystem;
+    private EnemySpawner _enemySpawner;
 
     // al comenzar el nivel debemos mostrar la cuenta atrás de comienzo del nivel
     // instanciar al Player
@@ -15,7 +16,7 @@ public class LevelSystem : MonoBehaviour
     private void Start()
     {
         _uiSystem = ServiceLocator.Instance.GetService<UISystem>();
-
+        _enemySpawner = ServiceLocator.Instance.GetService<EnemySpawner>();
         StartCoroutine(Countdown());
     }
 
@@ -29,6 +30,7 @@ public class LevelSystem : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         _uiSystem.HideCountdownText();
+        _enemySpawner.StartSpawn();
     }
 
 }
