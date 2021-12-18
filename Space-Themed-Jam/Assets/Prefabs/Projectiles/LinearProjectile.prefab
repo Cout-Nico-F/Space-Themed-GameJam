@@ -135,7 +135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: {fileID: 11400000, guid: 87ee850d531772d47a64df1de5cd8c97, type: 2}
-  Rb: {fileID: 5058329850715591163}
   Speed: 20
   timeToDeactivate: 3
-  damage: 10
+  damage: 30

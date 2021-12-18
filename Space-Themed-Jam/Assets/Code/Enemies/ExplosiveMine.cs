@@ -13,4 +13,9 @@ public class ExplosiveMine : Enemy
     {
         
     }
+
+    protected override void DoTryShoot()
+    {
+
+    }
 }

@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 6823448177615032922}
   - component: {fileID: 1857015054868753569}
   - component: {fileID: 3751947717563979698}
-  - component: {fileID: 9086998636716809819}
   - component: {fileID: 4366004036625182692}
+  - component: {fileID: 3709673633827322223}
+  - component: {fileID: 9086998636716809819}
   m_Layer: 7
   m_Name: ExplosiveMine
   m_TagString: Untagged
@@ -123,23 +124,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
---- !u!114 &9086998636716809819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4717485221289630377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf91178520dc84a43baff7921264a8c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyCollider: {fileID: 3751947717563979698}
-  id: {fileID: 11400000, guid: f59157e3e68cc3f44a40e9fc8203d4ac, type: 2}
-  Speed: 5
-  damage: 25
-  pointsToAdd: 10
 --- !u!114 &4366004036625182692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,3 +136,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7844f0e62753a30479891cf0a269559a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3709673633827322223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717485221289630377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abe05d44d9750449bdfc7ee5444022f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilesConfiguration: {fileID: 11400000, guid: 9e4121bf18760af4db12110f69bdc314, type: 2}
+  defaultProyectile: {fileID: 0}
+  projectileSpawnpoint: {fileID: 0}
+--- !u!114 &9086998636716809819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717485221289630377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf91178520dc84a43baff7921264a8c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: {fileID: 11400000, guid: f59157e3e68cc3f44a40e9fc8203d4ac, type: 2}
+  damageForImpact: 40
