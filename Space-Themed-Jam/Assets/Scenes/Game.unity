@@ -1151,10 +1151,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 629268820}
   - {fileID: 538635647}
   - {fileID: 1121062585}
   - {fileID: 1469771070}
-  - {fileID: 629268820}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1175,6 +1175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b4f83f26c036b4395854c35452d88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseView: {fileID: 538635650}
+  gameOverView: {fileID: 1469771073}
   scoreView: {fileID: 1121062586}
   levelText: {fileID: 498031340}
   countdownText: {fileID: 354636852}
@@ -1240,7 +1242,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -1662,13 +1664,14 @@ GameObject:
   - component: {fileID: 538635647}
   - component: {fileID: 538635649}
   - component: {fileID: 538635648}
+  - component: {fileID: 538635650}
   m_Layer: 5
   m_Name: PauseView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &538635647
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1685,7 +1688,7 @@ RectTransform:
   - {fileID: 1794893443}
   - {fileID: 17137288}
   m_Father: {fileID: 451393138}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1730,6 +1733,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538635646}
   m_CullTransparentMesh: 1
+--- !u!114 &538635650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538635646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba822e07eb32f9b4e9f124dac72ea679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resumeButton: {fileID: 461961593}
+  restartButton: {fileID: 1794893444}
+  menuButton: {fileID: 17137289}
 --- !u!1 &629268819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,7 +1781,7 @@ RectTransform:
   - {fileID: 498031339}
   - {fileID: 354636851}
   m_Father: {fileID: 451393138}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2509,7 +2527,7 @@ RectTransform:
   m_Children:
   - {fileID: 510861330}
   m_Father: {fileID: 451393138}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -3077,13 +3095,14 @@ GameObject:
   - component: {fileID: 1469771070}
   - component: {fileID: 1469771072}
   - component: {fileID: 1469771071}
+  - component: {fileID: 1469771073}
   m_Layer: 5
   m_Name: GameOverView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1469771070
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3101,7 +3120,7 @@ RectTransform:
   - {fileID: 1320677804}
   - {fileID: 369684602}
   m_Father: {fileID: 451393138}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3146,6 +3165,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469771069}
   m_CullTransparentMesh: 1
+--- !u!114 &1469771073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469771069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa761f42902e7244a5feafb67c3be1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restartButton: {fileID: 1320677805}
+  menuButton: {fileID: 369684603}
 --- !u!1 &1713965861
 GameObject:
   m_ObjectHideFlags: 0

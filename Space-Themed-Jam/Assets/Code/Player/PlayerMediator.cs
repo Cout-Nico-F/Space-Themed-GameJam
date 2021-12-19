@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMediator : MonoBehaviour, IDamageable
 {
@@ -56,8 +57,7 @@ public class PlayerMediator : MonoBehaviour, IDamageable
         var isDead = healthController.ReciveDamage(amount);
         if (isDead)
         {
-            // si el PLayer muere lanzar evento de GameOver
-            Debug.Log("GAME OVER");
+            ServiceLocator.Instance.GetService<EventQueue>().EnqueueEvent(new GameOverEvent());
             Destroy(gameObject);
         }
     }

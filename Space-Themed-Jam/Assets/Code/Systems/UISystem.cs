@@ -1,23 +1,62 @@
 using DG.Tweening;
+using System;
 using TMPro;
 using UnityEngine;
 
 public class UISystem : MonoBehaviour, IEventObserver
 {
+    [SerializeField] private PauseView pauseView;
+    [SerializeField] private GameOverView gameOverView;
     [SerializeField] private ScoreView scoreView;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private CanvasGroup countdownCanvasGroup;
 
+    private EventQueue _eventQueue;
+    private IInput _input;
+    private bool IsGamePaused;
+
+
+    private void Awake()
+    {
+        pauseView.Configure(this);
+        gameOverView.Configure(this);
+    }
+
 
     private void Start()
     {
         HideAllMenus();
-        // nos suscribimos a los eventos Victory y Game Over
+        _input = ServiceLocator.Instance.GetService<IInput>();
+        _eventQueue = ServiceLocator.Instance.GetService<EventQueue>();
+        _eventQueue.Subscribe(EventIds.GameOver, this);
+        _eventQueue.Subscribe(EventIds.Victory, this);
+    }
+
+    private void Update()
+    {
+        if (!_input.IsPausePressed()) return;
+
+        if (IsGamePaused)
+        {
+            OnResumePressed();
+        }
+        else
+        {
+            OnPausePressed();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        _eventQueue.Unsubscribe(EventIds.GameOver, this);
+        _eventQueue.Unsubscribe(EventIds.Victory, this);
     }
 
     private void HideAllMenus()
     {
+        pauseView.Hide();
+        gameOverView.Hide();
     }
 
     public void ShowCountdown()
@@ -60,9 +99,35 @@ public class UISystem : MonoBehaviour, IEventObserver
         scoreView.AddScore(points);
     }
 
+    public void OnPausePressed()
+    {
+        pauseView.Show();
+        IsGamePaused = true;
+        new PauseGameCommand().Execute();
+    }
+
+    public void OnResumePressed()
+    {
+        pauseView.Hide();
+        IsGamePaused = false;
+        new ResumeGameCommand().Execute();
+    }
+
+    public void OnRestartPressed()
+    {
+
+    }
+
+    public void OnMenuPressed()
+    {
+
+    }
 
     public void Process(EventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (eventData.EventId == EventIds.GameOver)
+        {
+            gameOverView.Show();
+        }
     }
 }
