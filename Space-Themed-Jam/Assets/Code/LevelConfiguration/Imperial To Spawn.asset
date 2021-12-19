@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Imperial To Spawn
   m_EditorClassIdentifier: 
   enemyId: {fileID: 11400000, guid: abc5ab2569bc75c4b8b6abfa2b0f12c5, type: 2}
-  spawnPosition: {x: 20, y: 0, z: 0}
+  spawnPosition: {x: 20, y: -3, z: 0}
   health: 40
   speed: 5
   fireRate: 1

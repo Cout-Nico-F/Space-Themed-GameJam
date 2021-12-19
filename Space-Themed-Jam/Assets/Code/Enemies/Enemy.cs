@@ -66,6 +66,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     public void RecieveDamage(int amount)
     {
+        Debug.Log(gameObject.name + " recibe " + amount + "  de daño");
         var isDead = HealthController.ReciveDamage(amount);
         if (isDead)
         {
