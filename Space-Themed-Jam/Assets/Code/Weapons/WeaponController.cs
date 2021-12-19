@@ -9,6 +9,7 @@ public class WeaponController : MonoBehaviour
     private ProjectileFactory _projectileFactory;
     private float fireRate;
     private float _timeBetweenShoots;
+    private Teams _team;
 
     private void Awake()
     {
@@ -17,9 +18,10 @@ public class WeaponController : MonoBehaviour
         _projectileFactory.Init();
     }
 
-    public void Configure(float fireRate)
+    public void Configure(float fireRate, Teams team)
     {
         this.fireRate = fireRate;
+        _team = team;
     }
     
     public void TryShoot()
@@ -32,7 +34,7 @@ public class WeaponController : MonoBehaviour
 
     private void Shoot()
     {
-        var projectile = _projectileFactory.SpawnFromPool(defaultProyectile.Value, projectileSpawnpoint.position, projectileSpawnpoint.rotation);
+        var projectile = _projectileFactory.SpawnFromPool(defaultProyectile.Value, projectileSpawnpoint.position, projectileSpawnpoint.rotation, _team);
         _timeBetweenShoots = Time.time + fireRate;
     }
 }

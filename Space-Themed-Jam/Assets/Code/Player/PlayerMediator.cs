@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerMediator : MonoBehaviour, IDamageable
 {
+    public Teams Team { get; private set; }
+
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private HealthController healthController;
     [SerializeField] private WeaponController weaponController;
@@ -22,7 +24,8 @@ public class PlayerMediator : MonoBehaviour, IDamageable
     {
         _input = ServiceLocator.Instance.GetService<IInput>();
         healthController.Init(maxHealth);
-        weaponController.Configure(fireRate);
+        Team = Teams.Ally;
+        weaponController.Configure(fireRate, Team);
     }
 
 

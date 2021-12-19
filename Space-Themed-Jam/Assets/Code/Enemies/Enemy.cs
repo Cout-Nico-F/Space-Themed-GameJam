@@ -2,6 +2,8 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
+    public Teams Team { get; private set; }
+
     [SerializeField] private EnemyId id;
     [SerializeField] private int damageForImpact;
 
@@ -26,6 +28,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         Renderer = GetComponent<SpriteRenderer>();
         HealthController = GetComponent<HealthController>();
         WeaponController = GetComponent<WeaponController>();
+        Team = Teams.Enemy;
     }
 
     public void Configure(int health, float speed, float fireRate, int pointsToAdd)
@@ -36,7 +39,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         FireRate = fireRate;
         PointsToAdd = pointsToAdd;
         HealthController.Init(Health);
-        WeaponController.Configure(FireRate);
+        WeaponController.Configure(FireRate, Team);
         DoInit();
     }
 
@@ -66,7 +69,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     public void RecieveDamage(int amount)
     {
-        Debug.Log(gameObject.name + " recibe " + amount + "  de daño");
         var isDead = HealthController.ReciveDamage(amount);
         if (isDead)
         {

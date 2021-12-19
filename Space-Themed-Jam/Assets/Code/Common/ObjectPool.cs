@@ -26,7 +26,7 @@ public class ObjectPool
         }
     }
     
-    public Projectile SpawnFromPool(Vector3 position, Quaternion rotation)
+    public Projectile SpawnFromPool(Vector3 position, Quaternion rotation, Teams team)
     {
         var obj = _objectPool.Dequeue();
 
@@ -35,12 +35,12 @@ public class ObjectPool
             _objectPool.Enqueue(obj);
             var newObj = Object.Instantiate(_projectilePrefab);
             _objectPool.Enqueue(newObj);
-            newObj.Init(position, rotation);
+            newObj.Init(position, rotation, team);
             return newObj;
         }
 
         obj.gameObject.SetActive(true);
-        obj.Init(position, rotation);
+        obj.Init(position, rotation, team);
         _objectPool.Enqueue(obj);
         return obj;
     }

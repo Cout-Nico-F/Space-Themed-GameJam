@@ -4,6 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class Projectile : MonoBehaviour
 {
+    public Teams Team { get; private set; }
+    public string Id => id.Value;
+
     [SerializeField] private ProjectileId id;
     [SerializeField] protected float Speed;
     [SerializeField] private float timeToDeactivate;
@@ -13,7 +16,6 @@ public abstract class Projectile : MonoBehaviour
     protected Collider2D Collider2D;
     protected Transform MyTransform;
     protected bool Active;
-    public string Id => id.Value;
 
 
     private void Awake()
@@ -22,10 +24,11 @@ public abstract class Projectile : MonoBehaviour
         Collider2D = GetComponent<Collider2D>();
     }
 
-    public void Init(Vector3 position, Quaternion rotation)
+    public void Init(Vector3 position, Quaternion rotation, Teams team)
     {
         MyTransform = transform;
         Active = true;
+        Team = team;
         DoInit(position, rotation);
         StartCoroutine(DeactivateIn(timeToDeactivate));
     }
@@ -42,11 +45,14 @@ public abstract class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var damageable = collision.GetComponent<IDamageable>();
-        if (damageable != null)
+        if (damageable == null) return;
+
+        if (damageable.Team != Team)
         {
             damageable.RecieveDamage(damage);
             DeactivateProjectile();
         }
+            
     }
     
     private IEnumerator DeactivateIn(float seconds)
