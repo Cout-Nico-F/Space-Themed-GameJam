@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -123,11 +122,16 @@ public class UISystem : MonoBehaviour, IEventObserver
 
     }
 
+    private void OnGameOver()
+    {
+        gameOverView.Show(scoreView.CurrentScore);
+    }
+
     public void Process(EventData eventData)
     {
         if (eventData.EventId == EventIds.GameOver)
         {
-            gameOverView.Show();
+            OnGameOver();
         }
     }
 }

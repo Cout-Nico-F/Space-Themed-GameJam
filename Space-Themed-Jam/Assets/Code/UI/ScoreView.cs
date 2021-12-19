@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class ScoreView : MonoBehaviour
 {
+    public int CurrentScore => _currentScore;
+
     [SerializeField] private TextMeshProUGUI scoreText;
 
     private int _currentScore;
 
-    
+
     public void ResetScore()
     {
         UpdateScore(0);
