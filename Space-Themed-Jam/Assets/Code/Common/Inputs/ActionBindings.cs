@@ -10,4 +10,5 @@ public class ActionBindings : ScriptableObject
     public KeyCode moveRight;
 
     public KeyCode fire;
+    public KeyCode pause;
 }

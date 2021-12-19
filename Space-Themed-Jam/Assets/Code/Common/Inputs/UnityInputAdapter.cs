@@ -26,4 +26,9 @@ public class UnityInputAdapter : IInput
     {
         return Input.GetKey(_actionBindings.fire);
     }
+
+    public bool IsPausePressed()
+    {
+        return Input.GetKeyDown(_actionBindings.pause) ;
+    }
 }
